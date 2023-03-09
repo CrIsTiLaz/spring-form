@@ -4,60 +4,60 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
 <body>
 <div class="container">
 
-<form class="col-5" action="/register" th:object="${user}" method="post">
-    <div class="mb-3">
-        <label class="form-label"><b>Nume</b></label>
-        <input type="text" th:field="*{nume}" class="form-control" placeholder="Introdu numele">
-        <div th:if="${#fields.hasErrors('nume')}" th:errors="*{nume}" class="invalid-feedback"></div>
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>Prenume</b></label>
-        <input type="text" th:field="*{prenume}" class="form-control" placeholder="Introdu prenumele">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('prenume')}" th:errors="*{prenume}">
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>Email</b></label>
-        <input type="email" th:field="*{email}" class="form-control" placeholder="Introdu email-ul">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>Nr telefon</b></label>
-        <input type="text" th:field="*{phone}" class="form-control" placeholder="Introdu  numarul de telefon">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>Facultate</b></label>
-        <input type="text" th:field="*{facultate}" class="form-control" placeholder="Introdu facultatea">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('facultate')}" th:errors="*{facultate}">
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>Domeniu</b> </label>
-        <input type="text" th:field="*{domeniuS}" class="form-control" placeholder="Introdu domeniul de studiu">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('domeniuS')}" th:errors="*{domeniuS}">
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>Specializare</b> </label>
-        <input type="text" th:field="*{specializare}" class="form-control" placeholder="Introdu specializarea">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('specializare')}" th:errors="*{specializare}">
-    </div>
-    <div class="mb-3">
-        <label class="form-label"><b>An de studiu</b> </label>
-        <input type="number" th:field="*{anStudiu}" class="form-control" placeholder="Introdu anul de studiu">
-        <p class="alert alert-danger" th:if="${#fields.hasErrors('anStudiu')}" th:errors="*{anStudiu}">
-    </div>
+    <form name="myForm" action="/register" class="col-5" method="post" th:object="${user}">
+        <div class="mb-3">
+            <label class="form-label"><b>Nume</b></label>
+            <input class="form-control" placeholder="Introdu numele" th:field="*{nume}" type="text">
+            <p class="alert alert-danger" th:errors="*{nume}" th:if="${#fields.hasErrors('nume')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Prenume</b></label>
+            <input class="form-control" placeholder="Introdu prenumele" th:field="*{prenume}" type="text">
+            <p class="alert alert-danger" th:errors="*{prenume}" th:if="${#fields.hasErrors('prenume')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Email</b></label>
+            <input class="form-control" placeholder="Introdu email-ul" th:field="*{email}" type="text">
+            <p class="alert alert-danger" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Nr telefon</b></label>
+            <input class="form-control" placeholder="Introdu  numarul de telefon" th:field="*{phone}" type="text">
+            <p class="alert alert-danger" th:errors="*{phone}" th:if="${#fields.hasErrors('phone')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Facultate</b></label>
+            <input class="form-control" placeholder="Introdu facultatea" th:field="*{facultate}" type="text">
+            <p class="alert alert-danger" th:errors="*{facultate}" th:if="${#fields.hasErrors('facultate')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Domeniu</b> </label>
+            <input class="form-control" placeholder="Introdu domeniul de studiu" th:field="*{domeniuS}" type="text">
+            <p class="alert alert-danger" th:errors="*{domeniuS}" th:if="${#fields.hasErrors('domeniuS')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>Specializare</b> </label>
+            <input class="form-control" placeholder="Introdu specializarea" th:field="*{specializare}" type="text">
+            <p class="alert alert-danger" th:errors="*{specializare}" th:if="${#fields.hasErrors('specializare')}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><b>An de studiu</b> </label>
+            <input class="form-control" placeholder="Introdu anul de studiu" th:field="*{anStudiu}" type="number">
+            <p class="alert alert-danger" th:errors="*{anStudiu}" th:if="${#fields.hasErrors('anStudiu')}">
+        </div>
 
-    <button type="submit" class="btn btn-primary">Salvare</button>
-    <button type="submit" class="btn btn-primary">Stergere</button>
-    <button type="submit" class="btn btn-primary">Vizualizare</button>
-</form>
+        <button class="btn btn-primary" type="submit">Salvare</button>
+        <input type="reset" class="btn btn-danger" value="Sterge datele">
+    </form>
 </div>
 </body>
 </html>

@@ -39,4 +39,10 @@ public class UserController {
             return "home";
         }
     }
+    @GetMapping(params = "sterge")
+    public String stergeDate(@ModelAttribute("user") User user) {
+        // șterge datele utilizatorului din baza de date sau dintr-o altă sursă de date
+        return "/register";
+    }
+
 }
