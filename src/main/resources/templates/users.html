@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Registration page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Students</h1>
+    <table class="table table stripped">
+        <thead class="thead-dark">
+        <th scope="row">Nume</th>
+        <th scope="row">Prenume</th>
+        <th scope="row">Email</th>
+        <th scope="row">Numar telefon</th>
+        <th scope="row">Facultate</th>
+        <th scope="row">Domeniul de studii</th>
+        <th scope="row">Specializare</th>
+        <th scope="row">Anul de studiu</th>
+        </thead>
+        <tbody>
+        <tr th:each="us : ${user}">
+            <td th:text="${us.nume}"></td>
+            <td th:text="${us.prenume}"></td>
+            <td th:text="${us.email}"></td>
+            <td th:text="${us.phone}"></td>
+            <td th:text="${us.facultate}"></td>
+            <td th:text="${us.domeniuS}"></td>
+            <td th:text="${us.specializare}"></td>
+            <td th:text="${us.anStudiu}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

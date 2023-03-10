@@ -19,13 +19,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService service;
-    @GetMapping("/")
-    public String register(Model model){
-        User user = new User();
-        model.addAttribute("user", user);
-        return "register";
+    @GetMapping("/users")
+    public String getUsers(Model model){
+        List<User> users = service.findAllUsers();
+        model.addAttribute("user", users);
+        return "/users";
     }
-    @PostMapping("/register")
+    @PostMapping("/")
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
         System.out.println(user);
         if (bindingResult.hasErrors()) {
@@ -33,16 +33,10 @@ public class UserController {
             for (ObjectError error : errors) {
                 System.out.println(error.getDefaultMessage());
             }
-            return "/register";
+            return "register";
         } else {
             service.registerUser(user);
             return "home";
         }
     }
-    @GetMapping(params = "sterge")
-    public String stergeDate(@ModelAttribute("user") User user) {
-        // șterge datele utilizatorului din baza de date sau dintr-o altă sursă de date
-        return "/register";
-    }
-
 }

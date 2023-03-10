@@ -5,6 +5,8 @@ import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
@@ -12,5 +14,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public void registerUser(User user) {
         repo.save(user);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return (List<User>) repo.findAll();
     }
 }
