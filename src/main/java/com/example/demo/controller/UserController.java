@@ -23,9 +23,15 @@ public class UserController {
     public String getUsers(Model model){
         List<User> users = service.findAllUsers();
         model.addAttribute("user", users);
-        return "/users";
+        return "users";
     }
-    @PostMapping("/")
+    @GetMapping("/")
+    public String register(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
+        return "register";
+    }
+    @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
         System.out.println(user);
         if (bindingResult.hasErrors()) {
@@ -36,7 +42,7 @@ public class UserController {
             return "register";
         } else {
             service.registerUser(user);
-            return "home";
+            return "users";
         }
     }
 }
