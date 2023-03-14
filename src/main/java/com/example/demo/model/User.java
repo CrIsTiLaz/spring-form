@@ -24,7 +24,7 @@ public class User {
     @NotEmpty(message = "numele nu trebuie sa fie null")
     @Size(min = 4, max = 20)
     private String nume;
-    @NotEmpty(message = "prenumele nu trebuie sa fie null")
+    @NotEmpty(message  = "prenumele nu trebuie sa fie null")
     @Size(min = 4, max = 20)
     private String prenume;
     @NotEmpty(message = "email-ul nu trebuie sa fie null")
