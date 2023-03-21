@@ -8,14 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class NewController {
@@ -30,22 +28,24 @@ public class NewController {
         String s = String.format("attachment; filename=\"%s\"", finalName);
         response.setHeader("Content-Disposition", s);
 
-        FileOutputStream fileOutputStream = new FileOutputStream(finalName);
-        for (String tableName : tableNames) {
+        List<Map<String, Object>> rows = new ArrayList<>();
 
-            List<Map<String, Object>> rows = getRowsForTable(tableName);
+        for (String tableName : tableNames) {
+            var fileOutputStream = new FileWriter(finalName);
+            rows.addAll(getRowsForTable(tableName));
 
             var writer = new PrintWriter(fileOutputStream);
-            try (var csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(rows.get(0).keySet().toArray(new String[0])))) {
-
+            var csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(rows.get(0).keySet().toArray(new String[0])));
+                System.out.println(Arrays.toString(rows.get(0).keySet().toArray(new String[0])));
                 for (Map<String, Object> row : rows) {
                     csvPrinter.printRecord(row.values());
                     System.out.println(row.values());
                 }
                 csvPrinter.flush();
-            }
+                csvPrinter.close();
+                fileOutputStream.close();
+
         }
-        fileOutputStream.close();
     }
     private String formatName(String initialName, String format) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy_MMdd_HHmmss");
