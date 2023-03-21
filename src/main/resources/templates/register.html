@@ -59,9 +59,15 @@
         <input type="reset" class="btn btn-danger" value="Sterge datele">
     </form>
     <div class="btn ml-1">
-    <button class="btn btn-info" onclick="window.location.href='/users'">Acceseaza pagina</button>
+    <button class="btn btn-info" onclick="window.location.href='/users'">Vizualizare date</button>
 <!--    <input type="reset" class="btn btn-info" value="Vizualizare date">-->
     </div>
+</div>
+<div class="col-md-12" align="center">
+    <form action="/export">
+        <button class="btn btn-primary" type="submit">Export all tables to CSV</button>
+    </form>
+
 </div>
 </body>
 </html>
