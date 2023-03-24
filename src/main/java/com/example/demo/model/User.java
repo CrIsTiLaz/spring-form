@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="userregister")
+@Table(name="student")
 
 public class User {
     @Id
@@ -42,5 +42,4 @@ public class User {
     @NotNull
     @Digits(integer=1, fraction=0, message = "anul de studiu trebuie sa contina doar o cifra")
     private int anStudiu;
-
 }

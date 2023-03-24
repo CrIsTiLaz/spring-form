@@ -63,11 +63,17 @@
 <!--    <input type="reset" class="btn btn-info" value="Vizualizare date">-->
     </div>
 </div>
-<div class="col-md-12" align="center">
-    <form action="/export">
-        <button class="btn btn-primary" type="submit">Export all tables to CSV</button>
-    </form>
-
+<div class="row" style = "margin-left: 100px;">
+    <div class="col-sm-4" m>
+        <form action="/exportCSV">
+            <button class="btn btn-primary" type="submit">Export all tables to CSV</button>
+        </form>
+    </div>
+    <div class="col-sm-4">
+        <form action="/exportXLSX">
+            <button class="btn btn-primary" type="submit">Export all tables to XLSX</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

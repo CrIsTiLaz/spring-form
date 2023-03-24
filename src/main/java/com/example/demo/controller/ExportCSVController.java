@@ -20,7 +20,7 @@ import java.util.Map;
 public class ExportCSVController {
     @Autowired
     private DatabaseOperation databaseOperation;
-    @GetMapping("/export")
+    @GetMapping("/exportCSV")
     public void export(HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
 
@@ -36,7 +36,7 @@ public class ExportCSVController {
             rows.addAll(databaseOperation.getRowsForTable(tableName));
 
             var writer = new PrintWriter(fileOutputStream);
-            var csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(rows.get(0).keySet().toArray(new String[0])));
+            try (var csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(rows.get(0).keySet().toArray(new String[0])))) {
                 System.out.println(Arrays.toString(rows.get(0).keySet().toArray(new String[0])));
                 for (Map<String, Object> row : rows) {
                     csvPrinter.printRecord(row.values());
@@ -44,7 +44,8 @@ public class ExportCSVController {
                 }
                 csvPrinter.flush();
                 csvPrinter.close();
-                fileOutputStream.close();
+            }
+            fileOutputStream.close();
 
         }
     }
