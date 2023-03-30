@@ -20,12 +20,10 @@ import java.util.List;
 
 @Controller
 public class ExportXLSXController {
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private DatabaseOperation databaseOperation;
-
     @GetMapping("/exportXLSX")
     public void export() throws IOException, SQLException {
 

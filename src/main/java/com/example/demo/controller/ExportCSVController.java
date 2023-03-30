@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -20,11 +21,18 @@ import java.util.Map;
 public class ExportCSVController {
     @Autowired
     private DatabaseOperation databaseOperation;
+
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
     @GetMapping("/exportCSV")
     public void export(HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
 
+        String fromTable = "student"; // numele tabelei sursă
+        String toTable = "curs"; // numele tabelei destinație
+
         var tableNames = databaseOperation.getTableNames();
+        //var isFKey = databaseOperation.existaLegaturaDirectaSauIndirecta((tableNames.get(3)), tableNames.get(2));
+        //IndirectLinkChecker linkChecker = new IndirectLinkChecker(jdbcTemplate);
         var finalName = databaseOperation.formatName("export", ".csv");
         String s = String.format("attachment; filename=\"%s\"", finalName);
         response.setHeader("Content-Disposition", s);
