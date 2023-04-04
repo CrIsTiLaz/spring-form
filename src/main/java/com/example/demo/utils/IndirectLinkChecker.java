@@ -19,6 +19,8 @@ public class IndirectLinkChecker {
         initGraph();
     }
 
+
+
     private void initGraph() {
         String query = "SELECT " +
                 "    tc.table_name AS from_table, " +

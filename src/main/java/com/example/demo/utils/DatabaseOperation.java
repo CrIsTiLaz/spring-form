@@ -1,9 +1,6 @@
 package com.example.demo.utils;
 
 import org.jgrapht.Graph;
-import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,38 +66,27 @@ public class DatabaseOperation {
             return existaLegaturaIndirecta;
         }
     }
-    public void IndirectLinkChecker(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.graph = new DefaultDirectedGraph<>(DefaultEdge.class);
-        initGraph();
-    }
+    public Map<String, String> getForeignKeys(String tableName) {
+        String sql = "SELECT tc.constraint_name, tc.table_name, kcu.column_name, "
+                + "ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name "
+                + "FROM information_schema.table_constraints AS tc "
+                + "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name "
+                + "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name "
+                + "WHERE constraint_type = 'FOREIGN KEY' AND tc.table_name = " + tableName +  ";";
 
-    private void initGraph() {
-        String query = "SELECT " +
-                "    tc.table_name AS from_table, " +
-                "    ccu.table_name AS to_table " +
-                "FROM " +
-                "    information_schema.table_constraints tc " +
-                "    JOIN information_schema.key_column_usage kcu " +
-                "        ON tc.constraint_name = kcu.constraint_name " +
-                "    JOIN information_schema.constraint_column_usage ccu " +
-                "        ON ccu.constraint_name = tc.constraint_name " +
-                "WHERE " +
-                "    tc.constraint_type = 'FOREIGN KEY';";
-        List<String[]> rows = jdbcTemplate.query(query, (rs, rowNum) -> new String[]{rs.getString("from_table"), rs.getString("to_table")});
-        for (String[] row : rows) {
-            String fromTable = row[0];
-            String toTable = row[1];
-            graph.addVertex(fromTable);
-            graph.addVertex(toTable);
-            graph.addEdge(fromTable, toTable);
+        List<Map<String, Object>> results = jdbcTemplate.queryForList(sql, tableName);
+
+        Map<String, String> foreignKeys = new HashMap<>();
+        for (Map<String, Object> row : results) {
+            String constraintName = (String) row.get("constraint_name");
+            String columnName = (String) row.get("column_name");
+            String foreignTableName = (String) row.get("foreign_table_name");
+            String foreignColumnName = (String) row.get("foreign_column_name");
+
+            foreignKeys.put(constraintName, "Foreign key column: " + columnName + " references Primary key column: " + foreignColumnName + " in table: " + foreignTableName);
         }
-    }
 
-    public boolean hasIndirectLink(String fromTable, String toTable) {
-        GraphPath<String, DefaultEdge> shortestPath = DijkstraShortestPath.findPathBetween(graph, fromTable, toTable);
-        return shortestPath != null && shortestPath.getLength() > 1;
+        return foreignKeys;
     }
-
 
 }
